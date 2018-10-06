@@ -2,7 +2,7 @@
 const Router = require('koa-router');
 const router = new Router();
 
-const model = require('../model.js');
+const Blog = require('../model/blog.js');
 const fs = require('../libs/async-fs.js');
 const marked = require('marked');
 
@@ -18,8 +18,7 @@ router.get('/', async (ctx, next) => {
 
 router.get('/blog', async (ctx, next) => {
 
-    let list = await model.list();
-    console.log(list);
+    let list = await Blog.list();
     await ctx.render('blog.html', list);
 });
 
@@ -32,7 +31,7 @@ router.get('/blog/:id', async (ctx, next) => {
 
     let blogid = ctx.params.id;
 
-    let blog = await model.detail(blogid);
+    let blog = await Blog.detail(blogid);
     console.log(blog);
     let content = await fs.readFile(blog.path);
     let html = marked(String(content));

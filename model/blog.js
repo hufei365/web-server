@@ -1,4 +1,4 @@
-
+const _ = require('../libs/base');
 
 
 
@@ -12,8 +12,12 @@ const schema = new mongoose.Schema({
 
 const BlogList = mongoose.model('BlogList', schema);
 
-
-
+const preList = function(list){
+    return list.map((v)=>{
+        v.updatetime = _.date.format(v.mtime, 'yyyy-MM-dd');
+        return v;
+    });
+}
 
 module.exports = {
     list: async function(){
@@ -24,7 +28,8 @@ module.exports = {
                     reject(false);
                 } else {
                     console.log(`get blog list success!!`);
-                    resolve(docs);
+                    let _docs = preList(docs);
+                    resolve(_docs);
                 }
             })
         })
