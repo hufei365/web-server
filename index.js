@@ -10,7 +10,7 @@ const views = require('koa-views');
 const path = require('path');
  
 const app = new Koa();
-const router = require('./router/router.js');
+const router = require('./router/index.js');
 
 
 const publicFiles = serve(path.join(__dirname, 'public'));
